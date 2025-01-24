@@ -11,8 +11,8 @@ Demo project for running labs to evaluate Copilot viability
 - Go to the exercisefile folder
 - Open `nodeserver.ts` and begin by writing a Nodejs server, check the first suggestions based on the initial text
 - Open `test.ts` file and analyze the current test
-- Use `tsc` to compile 
-- Open a command prompt and run the test (`mocha test.js`)
+- Use `npm run build` to compile 
+- Open a command prompt and run the test (`npm run test`)
 - See the result, it should display something like:
 
 ``` bash
@@ -30,6 +30,18 @@ server is listening on port 3000
 ### Exercise 2: Building new functionalities
 
 The exercise consist of building a web server using Nodejs that serves the request of various functionality.
+
+The first 3 methods, get, DaysBetweenDates and Validatephonenumber have been created as examle from below prompts.
+
+After running npm start, it can be tested from following urls:
+
+http://localhost:3000/get
+
+http://localhost:3000/daysbetweendates?date1=2025-03-01&date2=2025-03-25
+
+http://localhost:3000/validatephonenumber?phoneNumber=%2B34666777888
+
+Use the sample prompt to generate and test rest of the method.
 
 The requests that the server must attend are the following:
 
