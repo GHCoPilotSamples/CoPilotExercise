@@ -9,6 +9,7 @@ Demo project for running labs to evaluate Copilot viability
 ### Exercise 1: Introduction
 
 - Go to the exercisefile folder
+- Run 'npm install'
 - Open `nodeserver.ts` and begin by writing a Nodejs server, check the first suggestions based on the initial text
 - Open `test.ts` file and analyze the current test
 - Use `npm run build` to compile 
