@@ -31,10 +31,10 @@ const server = http.createServer((req, res) => {
     if (trimmedPath === 'get' && method === 'get') {
       res.end('Hello, world!');
     } 
-
+    
     //Calculate days between two dates
     //receive by query string 2 parameters date1 and date 2, and calculate the days between those two dates.
-      
+    
     else if (trimmedPath === 'daysbetweendates' && method === 'get') {
       const date1 = queryData.date1 as string;
       const date2 = queryData.date2 as string;
@@ -57,10 +57,10 @@ const server = http.createServer((req, res) => {
 
       res.end(`${daysBetween} days`);
     } 
-      // Receive by querystring a parameter called phoneNumber
-     //validate phoneNumber with Spanish format, for example +34666777888
-      //if phoneNumber is valid return "valid"
-      //if phoneNumber is not valid return "invalid"
+    // Receive by querystring a parameter called phoneNumber
+    //validate phoneNumber with Spanish format, for example +34666777888
+    //if phoneNumber is valid return "valid"
+    //if phoneNumber is not valid return "invalid"
         else if (trimmedPath === 'validatephonenumber' && method === 'get') {
             const phoneNumber = queryData.phoneNumber as string;
 
