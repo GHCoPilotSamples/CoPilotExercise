@@ -31,7 +31,7 @@ server is listening on port 3000
 
 The exercise consist of building a web server using Nodejs that serves the request of various functionality.
 
-The first 3 methods, get, DaysBetweenDates and Validatephonenumber have been created as examle from below prompts.
+The first 3 methods, get, DaysBetweenDates and Validatephonenumber have been created as example from below prompts.
 
 After running npm start, it can be tested from following urls:
 
