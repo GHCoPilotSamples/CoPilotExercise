@@ -30,6 +30,8 @@ const server = http_1.default.createServer((req, res) => {
         if (trimmedPath === 'get' && method === 'get') {
             res.end('Hello, world!');
         }
+        //Calculate days between two dates
+        //receive by query string 2 parameters date1 and date 2, and calculate the days between those two dates.
         else if (trimmedPath === 'daysbetweendates' && method === 'get') {
             const date1 = queryData.date1;
             const date2 = queryData.date2;
@@ -64,6 +66,13 @@ const server = http_1.default.createServer((req, res) => {
             else {
                 res.end('invalid');
             }
+        }
+        // CalculateMemoryConsumption:
+        // Return the memory consumption of the process in GB, rounded to 2 decimals
+        // Example: 0.02 GB
+        else if (trimmedPath === 'calculatememoryconsumption' && method === 'get') {
+            const memoryConsumption = process.memoryUsage().heapTotal / 1024 / 1024 / 1024;
+            res.end(`${memoryConsumption.toFixed(2)} GB`);
         }
         else {
             res.end('method not supported');

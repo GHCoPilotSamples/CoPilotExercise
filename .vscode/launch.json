@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "Run Script: start",
+            "request": "launch",
+            "command": "npm run start",
+            "cwd": "${workspaceFolder}/exercisefiles/node_typescript"
+        }
+    ],
+    "type": "setting",
+    "settings": {
+        "sourceMaps": true,
+        "outFiles": ["${workspaceFolder}/exercisefiles/node_typescript/dist/**/*.js"],
+        "runtimeExecutable": "ts-node",
+        "args": ["${workspaceFolder}/exercisefiles/node_typescript/src/index.ts"]
+    }
+}
