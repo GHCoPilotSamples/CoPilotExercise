@@ -1,91 +1,51 @@
-// write a nodejs server that will expose a method call "get" that will return the value of the key passed in the query string
-// example: http://localhost:3000/get?key=hello
-// if the key is not passed, return "key not passed"
-// if the key is passed, return "hello" + key
-// if the url has other methods, return "method not supported"
-// when server is listening, log "server is listening on port 3000"
-
-
-import http from 'http';
-import url from 'url';
-import { StringDecoder } from 'string_decoder';
+import http from "http"
+import url from "url"
+import fs from "fs"
+import zlib from "zlib"
+import readline from "readline"
 
 const server = http.createServer((req, res) => {
-  const parsedUrl = url.parse(req.url || '', true);
-  const path = parsedUrl.pathname;
-  const trimmedPath = path?.replace(/^\/+|\/+$/g, '');
-  const queryData = parsedUrl.query;
-  const method = req.method?.toLowerCase();
-  const headers = req.headers;
+  if (!req.url) {
+    res.end("Invalid request")
+    return
+  }
 
-  const decoder = new StringDecoder('utf-8');
-  let buffer = '';
+  const parsedUrl = url.parse(req.url, true)
+  const queryData = parsedUrl.query
 
-  req.on('data', (data) => {
-    buffer += decoder.write(data);
-  });
+  if (req.url.startsWith("/DaysBetweenDates")) {
+    const date1 = queryData.date1 as string
+    const date2 = queryData.date2 as string
 
-  req.on('end', () => {
-    buffer += decoder.end();
+    const date1_ms = Date.parse(date1)
+    const date2_ms = Date.parse(date2)
 
-    if (trimmedPath === 'get' && method === 'get') {
-      res.end('Hello, world!');
-    } 
-    
-    //Calculate days between two dates
-    //receive by query string 2 parameters date1 and date 2, and calculate the days between those two dates.
-    
-    else if (trimmedPath === 'daysbetweendates' && method === 'get') {
-      const date1 = queryData.date1 as string;
-      const date2 = queryData.date2 as string;
+    const difference_ms = date2_ms - date1_ms
 
-      if (!date1 || !date2) {
-        res.end('Both date1 and date2 query parameters are required');
-        return;
-      }
+    res.end(Math.round(difference_ms / 86400000) + " days")
+  } else if (req.url.startsWith("/Validatephonenumber")) {
+    const phoneNumber = queryData.phoneNumber as string
 
-      const date1_ms = Date.parse(date1);
-      const date2_ms = Date.parse(date2);
+    const regex = /^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$/
 
-      if (isNaN(date1_ms) || isNaN(date2_ms)) {
-        res.end('Invalid date format');
-        return;
-      }
-
-      const difference_ms = date2_ms - date1_ms;
-      const daysBetween = Math.round(difference_ms / 86400000);
-
-      res.end(`${daysBetween} days`);
-    } 
-    // Receive by querystring a parameter called phoneNumber
-    //validate phoneNumber with Spanish format, for example +34666777888
-    //if phoneNumber is valid return "valid"
-    //if phoneNumber is not valid return "invalid"
-        else if (trimmedPath === 'validatephonenumber' && method === 'get') {
-            const phoneNumber = queryData.phoneNumber as string;
-
-            if (!phoneNumber) {
-            res.end('phoneNumber query parameter is required');
-            return;
-            }
-
-            const isValid = /^\+34\d{9}$/.test(phoneNumber);
-
-            if (isValid) {
-            res.end('valid');
-            } else {
-            res.end('invalid');
-            }
-        }
-
-    else {
-      res.end('method not supported');
+    if (regex.test(phoneNumber)) {
+      res.end("valid")
+    } else {
+      res.end("invalid")
     }
-  });
-});
+  } else if (req.url.startsWith("/Get")) {
+    const key = queryData.key as string
+
+    if (!key) {
+      res.end("key not passed")
+    } else {
+      res.end("hello " + escape(key))
+    }
+  } else {
+    res.end("Called method not found")
+  }
+})
 
 server.listen(3000, () => {
-  console.log('server is listening on port 3000');
-});
-
-export default server;
+  console.log("server is listening on port 3000")
+})
